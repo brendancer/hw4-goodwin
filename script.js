@@ -28,7 +28,7 @@ var questions = [
   },
 
   {
-    questions: "javascript is like:",
+    question: "javascript is like:",
     a: "the direction of the wind",
     b: "the bread of my PBJ",
     c: "the sharks in the ocean",
@@ -60,8 +60,8 @@ function renderQuestion() {
       correct +
       " of " +
       questions.length +
-      " questions correct.</h2>";
-    get(test_status).innerHTML = "test completed";
+      " questions correct</h2>";
+    get("test_status").innerHTML = "Test completed";
     //allows user to restart the test by setting position to 0
     pos = 0;
     correct = 0;
@@ -79,7 +79,7 @@ function renderQuestion() {
   chD = questions[pos].d;
 
   //display question
-  test.innerhtml = "<h3>" + question + "</h3>";
+  test.innerHTML = "<h3>" + question + "</h3>";
 
   //display answer options
   test.innerHTML +=
