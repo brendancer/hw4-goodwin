@@ -1,17 +1,27 @@
 //timer
 
-var min_allowed;
-var sec_allowed;
-var sec_remaining;
-var min_remaining;
-var mil_remaining;
-
-min_allowed = 1;
-sec_allowed = min_allowed * 60;
-mil_allowed = sec_allowed * 1000;
-
 function start() {
   document.getElementById("startNote").innerHTML = "Timer Started!";
+
+  function minTwoDigits() {
+    return (sec < 10 ? "0" : "") + sec;
+  }
+
+  var minute = 0;
+  var sec = 10;
+  setInterval(function () {
+    document.getElementById("timer").innerHTML =
+      minute + " : " + minTwoDigits();
+
+    sec--;
+
+    if (sec == 0) {
+      minute--;
+      sec = 59;
+    }
+    if (minute == 0) {
+    }
+  }, 1000);
 }
 
 //questions
