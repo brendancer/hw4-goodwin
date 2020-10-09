@@ -1,31 +1,35 @@
 //timer
 var minute = 0;
 var sec = 5;
-function start() {
-  document.getElementById("startNote").innerHTML = "Timer Started!";
 
-  function minTwoDigits() {
-    return (sec < 10 ? "0" : "") + sec;
-  }
-
-  var startTime = setInterval(function showTimer() {
-    document.getElementById("showTimer").innerHTML =
-      minute + " : " + minTwoDigits();
-
-    sec--;
-
-    if (sec == -1) {
-      minute--;
-      sec = 59;
-    }
-    if (minute == -1) {
-      sec = 00;
-      clearInterval(startTime);
-      document.getElementById("startNote").innerHTML = "Time's up!";
-    }
-  }, 1000);
+function minTwoDigits() {
+  return (sec < 10 ? "0" : "") + sec;
 }
-var timesup = (minute * 60 + sec) * 1000;
+
+function showTimer() {
+  sec--;
+  document.getElementById("showTimer").innerHTML =
+    minute + " : " + minTwoDigits();
+
+  if (sec == -1) {
+    minute--;
+    sec = 59;
+  }
+  if (minute == -1) {
+    sec = 00;
+    endQuiz();
+  }
+}
+
+function endQuiz() {
+  clearInterval(startTime);
+  document.getElementById("startNote").innerHTML = "Time's up!";
+  document.getElementById("test").style.display = "none";
+}
+
+function start() {
+  startTime = setInterval(showTimer, 1000);
+}
 
 //questions
 //questions
