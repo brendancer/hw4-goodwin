@@ -1,15 +1,6 @@
 //timer
-
-var min_allowed;
-var sec_allowed;
-var sec_remaining;
-var min_remaining;
-var mil_remaining;
-
-min_allowed = 1;
-sec_allowed = min_allowed * 60;
-mil_allowed = sec_allowed * 1000;
-
+var minute = 0;
+var sec = 5;
 function start() {
   document.getElementById("startNote").innerHTML = "Timer Started!";
 
@@ -17,23 +8,24 @@ function start() {
     return (sec < 10 ? "0" : "") + sec;
   }
 
-  var minute = 0;
-  var sec = 10;
   var startTime = setInterval(function showTimer() {
-    document.getElementById("timer").innerHTML =
+    document.getElementById("showTimer").innerHTML =
       minute + " : " + minTwoDigits();
 
     sec--;
 
-    if (sec == 0) {
+    if (sec == -1) {
       minute--;
       sec = 59;
     }
     if (minute == -1) {
+      sec = 00;
       clearInterval(startTime);
+      document.getElementById("startNote").innerHTML = "Time's up!";
     }
   }, 1000);
 }
+var timesup = (minute * 60 + sec) * 1000;
 
 //questions
 //questions
