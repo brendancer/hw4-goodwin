@@ -8,15 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <style>
-      div#test {
-        border: #5ab029 3px solid;
-        padding: 10px 40px 40px 40px;
-        background-color: #e5fce3;
-        width: 50%;
-      }
-    </style>
-
+    <link rel="stylesheet" href="style.css" />
     <!--Bootstrap-->
     <link
       rel="stylesheet"
@@ -26,8 +18,19 @@
     />
   </head>
   <body>
-    <h2 id="test_status"></h2>
+    <!--Timer-->
+
+    <div class="container" id="timer">
+      <h2>Timer</h2>
+      <button type="button" class="btn btn-success" onclick="start()">
+        Start Quiz
+      </button>
+      <p id="startNote"></p>
+    </div>
+
+    <!--Test structure-->
     <div id="test"></div>
+    <h2 id="test_status"></h2>
 
     <script src="script.js"></script>
     <!-- Optional JavaScript -->

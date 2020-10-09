@@ -1,3 +1,19 @@
+//timer
+
+var min_allowed;
+var sec_allowed;
+var sec_remaining;
+var min_remaining;
+var mil_remaining;
+
+min_allowed = 1;
+sec_allowed = min_allowed * 60;
+mil_allowed = sec_allowed * 1000;
+
+function start() {
+  document.getElementById("startNote").innerHTML = "Timer Started!";
+}
+
 //questions
 var pos = 0; //position in quiz-Q#
 var correct = 0; //number of questions answered correctly
@@ -47,21 +63,17 @@ var questions = [
   },
 ];
 
-function get(x) {
-  return document.getElementById(x);
-}
-
 //renders question on the page
 function renderQuestion() {
-  test = get("test");
+  test = document.getElementById("test");
   if (pos >= questions.length) {
     test.innerHTML =
-      "<h2> you got " +
+      "<h2> you got </h2>" +
       correct +
       " of " +
       questions.length +
       " questions correct</h2>";
-    get("test_status").innerHTML = "Test completed";
+    document.getElementById("test_status").innerHTML = "Test completed";
     //allows user to restart the test by setting position to 0
     pos = 0;
     correct = 0;
@@ -69,7 +81,7 @@ function renderQuestion() {
     return false;
   }
 
-  get("test_status").innerHTML =
+  document.getElementById("test_status").innerHTML =
     "Question " + (pos + 1) + " of " + questions.length;
 
   question = questions[pos].question;
