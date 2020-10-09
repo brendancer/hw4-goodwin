@@ -1,5 +1,15 @@
 //timer
 
+var min_allowed;
+var sec_allowed;
+var sec_remaining;
+var min_remaining;
+var mil_remaining;
+
+min_allowed = 1;
+sec_allowed = min_allowed * 60;
+mil_allowed = sec_allowed * 1000;
+
 function start() {
   document.getElementById("startNote").innerHTML = "Timer Started!";
 
@@ -9,7 +19,7 @@ function start() {
 
   var minute = 0;
   var sec = 10;
-  setInterval(function () {
+  var startTime = setInterval(function showTimer() {
     document.getElementById("timer").innerHTML =
       minute + " : " + minTwoDigits();
 
@@ -19,11 +29,14 @@ function start() {
       minute--;
       sec = 59;
     }
-    if (minute == 0) {
+    if (minute == -1) {
+      clearInterval(startTime);
     }
   }, 1000);
 }
 
+//questions
+//questions
 //questions
 var pos = 0; //position in quiz-Q#
 var correct = 0; //number of questions answered correctly
