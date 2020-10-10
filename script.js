@@ -1,6 +1,7 @@
 //timer
 var minute = 0;
-var sec = 5;
+var sec = 10;
+wedone = false;
 
 function minTwoDigits() {
   return (sec < 10 ? "0" : "") + sec;
@@ -16,23 +17,30 @@ function showTimer() {
     sec = 59;
   }
   if (minute == -1) {
-    sec = 00;
     endQuiz();
   }
 }
 
 function endQuiz() {
   clearInterval(startTime);
+  document.getElementById("showTimer").innerHTML = "0:00";
   document.getElementById("startNote").innerHTML = "Time's up!";
-  document.getElementById("test").style.display = "none";
+
+  wedone = true;
+  test.innerHTML = "<h2> you got </h2>" + correct + "but you missed" + wrong;
+  document.getElementById("test_status").innerHTML = "Test completed";
+  //allows user to restart the test by setting position to 0
+  pos = 0;
+  correct = 0;
+  minute = 0;
+  sec = 10;
 }
 
 function start() {
   startTime = setInterval(showTimer, 1000);
+  renderQuestion();
 }
 
-//questions
-//questions
 //questions
 var pos = 0; //position in quiz-Q#
 var correct = 0; //number of questions answered correctly
@@ -42,6 +50,7 @@ var question;
 var choice; //user's selcted choice
 var choices; //[possible answers]
 var chA, chB, chC, chD;
+var wrong = 0;
 
 var questions = [
   {
@@ -86,18 +95,7 @@ var questions = [
 function renderQuestion() {
   test = document.getElementById("test");
   if (pos >= questions.length) {
-    test.innerHTML =
-      "<h2> you got </h2>" +
-      correct +
-      " of " +
-      questions.length +
-      " questions correct</h2>";
-    document.getElementById("test_status").innerHTML = "Test completed";
-    //allows user to restart the test by setting position to 0
-    pos = 0;
-    correct = 0;
-    // stops rest of renderQuestion from running when test is complete
-    return false;
+    endQuiz();
   }
 
   document.getElementById("test_status").innerHTML =
@@ -146,7 +144,10 @@ function checkAnswer() {
   //checking choice against correct answer
   if (choice == questions[pos].answer) {
     correct++;
+  } else {
+    wrong++;
   }
+
   pos++;
 
   renderQuestion();
