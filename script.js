@@ -1,6 +1,6 @@
 //timer
 var minute = 0;
-var sec = 10;
+var sec = 15;
 wedone = false;
 
 function minTwoDigits() {
@@ -25,19 +25,75 @@ function endQuiz() {
   clearInterval(startTime);
   document.getElementById("showTimer").innerHTML = "0:00";
   document.getElementById("startNote").innerHTML = "Time's up!";
-
   wedone = true;
   test.innerHTML = "<h2> you got </h2>" + correct + "but you missed" + wrong;
   document.getElementById("test_status").innerHTML = "Test completed";
-  //allows user to restart the test by setting position to 0
+  //allows user to restart the test by setting position and time to 0
   pos = 0;
   correct = 0;
   minute = 0;
-  sec = 10;
+  sec = 15;
 }
 
 function start() {
   startTime = setInterval(showTimer, 1000);
+  renderQuestion();
+}
+
+function renderQuestion() {
+  for (i = 0; i < questions.length - 1; i++) {
+    console.log(i);
+    test = document.getElementById("test");
+    document.getElementById("test_status").innerHTML =
+      "Question " + (pos + 1) + " of " + questions.length;
+
+    question = questions[pos].question;
+    chA = questions[pos].a;
+    chB = questions[pos].b;
+    chC = questions[pos].c;
+    chD = questions[pos].d;
+
+    //display question
+    test.innerHTML = "<h3>" + question + "</h3>";
+
+    //display answer options
+    test.innerHTML +=
+      "<label> <input type ='radio' name = 'choices' value = 'A'> " +
+      chA +
+      "</label><br>";
+    test.innerHTML +=
+      "<label> <input type = 'radio' name = 'choices' value = 'B'> " +
+      chB +
+      "</label><br>";
+    test.innerHTML +=
+      "<label> <input type = 'radio' name = 'choices' value = 'C'>" +
+      chC +
+      "</label><br>";
+    test.innerHTML +=
+      "<label> <input type ='radio' name = 'choices' value = 'A'> " +
+      chD +
+      "</label><br>";
+
+    test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+  }
+}
+function checkAnswer() {
+  //setting a value to selection of choices
+  choices = document.getElementsByName("choices");
+  for (var i = 0; i < choices.length; i++) {
+    if (choices[i].checked) {
+      choice = choices[i].value;
+    }
+  }
+
+  //checking choice against correct answer
+  if (choice == questions[pos].answer) {
+    correct++;
+  } else {
+    wrong++;
+  }
+  pos++;
+
   renderQuestion();
 }
 
@@ -91,67 +147,8 @@ var questions = [
   },
 ];
 
-//renders question on the page
-function renderQuestion() {
-  test = document.getElementById("test");
-  if (pos >= questions.length) {
-    endQuiz();
-  }
-
-  document.getElementById("test_status").innerHTML =
-    "Question " + (pos + 1) + " of " + questions.length;
-
-  question = questions[pos].question;
-  chA = questions[pos].a;
-  chB = questions[pos].b;
-  chC = questions[pos].c;
-  chD = questions[pos].d;
-
-  //display question
-  test.innerHTML = "<h3>" + question + "</h3>";
-
-  //display answer options
-  test.innerHTML +=
-    "<label> <input type ='radio' name = 'choices' value = 'A'> " +
-    chA +
-    "</label><br>";
-  test.innerHTML +=
-    "<label> <input type = 'radio' name = 'choices' value = 'B'> " +
-    chB +
-    "</label><br>";
-  test.innerHTML +=
-    "<label> <input type = 'radio' name = 'choices' value = 'C'>" +
-    chC +
-    "</label><br>";
-  test.innerHTML +=
-    "<label> <input type ='radio' name = 'choices' value = 'A'> " +
-    chD +
-    "</label><br>";
-
-  test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
-}
 //check answers
 
-function checkAnswer() {
-  //setting a value to selection of choices
-  choices = document.getElementsByName("choices");
-  for (var i = 0; i < choices.length; i++) {
-    if (choices[i].checked) {
-      choice = choices[i].value;
-    }
-  }
-
-  //checking choice against correct answer
-  if (choice == questions[pos].answer) {
-    correct++;
-  } else {
-    wrong++;
-  }
-
-  pos++;
-
-  renderQuestion();
-}
 //renders question on page load event
 
-window.addEventListener("load", renderQuestion);
+//window.addEventListener("load", renderQuestion);
