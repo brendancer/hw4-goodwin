@@ -41,42 +41,40 @@ function start() {
 }
 
 function renderQuestion() {
-  for (i = 0; i < questions.length - 1; i++) {
-    console.log(i);
-    test = document.getElementById("test");
-    document.getElementById("test_status").innerHTML =
-      "Question " + (pos + 1) + " of " + questions.length;
+  test = document.getElementById("test");
+  document.getElementById("test_status").innerHTML =
+    "Question " + (pos + 1) + " of " + questions.length;
 
-    question = questions[pos].question;
-    chA = questions[pos].a;
-    chB = questions[pos].b;
-    chC = questions[pos].c;
-    chD = questions[pos].d;
+  question = questions[pos].question;
+  chA = questions[pos].a;
+  chB = questions[pos].b;
+  chC = questions[pos].c;
+  chD = questions[pos].d;
 
-    //display question
-    test.innerHTML = "<h3>" + question + "</h3>";
+  //display question
+  test.innerHTML = "<h3>" + question + "</h3>";
 
-    //display answer options
-    test.innerHTML +=
-      "<label> <input type ='radio' name = 'choices' value = 'A'> " +
-      chA +
-      "</label><br>";
-    test.innerHTML +=
-      "<label> <input type = 'radio' name = 'choices' value = 'B'> " +
-      chB +
-      "</label><br>";
-    test.innerHTML +=
-      "<label> <input type = 'radio' name = 'choices' value = 'C'>" +
-      chC +
-      "</label><br>";
-    test.innerHTML +=
-      "<label> <input type ='radio' name = 'choices' value = 'A'> " +
-      chD +
-      "</label><br>";
+  //display answer options
+  test.innerHTML +=
+    "<label> <input type ='radio' name = 'choices' value = 'A'> " +
+    chA +
+    "</label><br>";
+  test.innerHTML +=
+    "<label> <input type = 'radio' name = 'choices' value = 'B'> " +
+    chB +
+    "</label><br>";
+  test.innerHTML +=
+    "<label> <input type = 'radio' name = 'choices' value = 'C'>" +
+    chC +
+    "</label><br>";
+  test.innerHTML +=
+    "<label> <input type ='radio' name = 'choices' value = 'A'> " +
+    chD +
+    "</label><br>";
 
-    test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
-  }
+  test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
 }
+
 function checkAnswer() {
   //setting a value to selection of choices
   choices = document.getElementsByName("choices");
@@ -93,9 +91,12 @@ function checkAnswer() {
     wrong++;
   }
   pos++;
-
+  if (pos == question.length) {
+    endQuiz();
+  }
   renderQuestion();
 }
+//subtracting time for wrong answers
 
 //questions
 var pos = 0; //position in quiz-Q#
