@@ -21,6 +21,8 @@ function showTimer() {
   document.getElementById("showTimer").innerHTML = minute + " : " + sec;
 }
 
+//----------------------------------------------------------------------
+
 function endQuiz() {
   clearInterval(startTime);
   if (timer == 0) {
@@ -38,6 +40,8 @@ function endQuiz() {
   wrong = 0;
   timer = 0;
 }
+
+//-----------------------------------------------------------------------
 
 function renderQuestion() {
   test = document.getElementById("test");
@@ -72,6 +76,8 @@ function renderQuestion() {
   test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
 }
 
+//--------------------------------------------------------------------------------
+
 function checkAnswer() {
   //setting a value to selection of choices
   choices = document.getElementsByName("choices");
@@ -80,19 +86,16 @@ function checkAnswer() {
       choice = choices[i].value;
     }
   }
-
   //checking choice against correct answer
   if (choice == questions[pos].answer) {
     correct++;
-    sec = sec - 10;
   } else {
     wrong++;
     timer -= 10;
-    if (timer < 0) {
-      endQuiz();
-    }
   }
-
+  if (timer < 0) {
+    endQuiz();
+  }
   pos++;
 
   if (pos == questions.length) {
@@ -102,16 +105,22 @@ function checkAnswer() {
   }
 }
 
+//-----------------------------------------------------------------------------
+var initialInput;
+function highScore() {
+  document.getElementById("initials").value = initialInput;
+  console.log(initialInput);
+}
+
 //questions
 var pos = 0; //position in quiz-Q#
 var correct = 0; //number of questions answered correctly
+var wrong = 0; //number of querstions answered incorrectly
 var test; //test div
-var test_status; ////heading displaying user's progress through the test
-var question;
-var choice; //user's selcted choice
+var question; //individual question
+var choice; //user's selected choice
 var choices; //[possible answers]
 var chA, chB, chC, chD;
-var wrong = 0;
 
 var questions = [
   {
@@ -151,9 +160,3 @@ var questions = [
     answer: "A",
   },
 ];
-
-//check answers
-
-//renders question on page load event
-
-//window.addEventListener("load", renderQuestion);
