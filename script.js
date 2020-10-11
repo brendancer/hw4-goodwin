@@ -8,6 +8,8 @@ function start() {
   renderQuestion();
 }
 
+//------------------------------------------------------------------
+
 function showTimer() {
   timer--;
   if (timer < 0) {
@@ -18,12 +20,6 @@ function showTimer() {
   sec = Math.floor(timer % 60);
   document.getElementById("showTimer").innerHTML = minute + " : " + sec;
 }
-
-var initials = document.getElementById("initials");
-var saveScoreBtn = document.getElementById("saveScoreBtn");
-var finalScore = correct;
-var mostRecentScore = localStorage.getItem("mostRecentScore");
-var maxHighScores = 3;
 
 function endQuiz() {
   clearInterval(startTime);
