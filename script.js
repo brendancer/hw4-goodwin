@@ -2,6 +2,7 @@
 var timer = 120;
 
 function start() {
+  timer = 120;
   startTime = setInterval(showTimer, 1000);
   document.getElementById("startNote").innerHTML = "Timer started";
   renderQuestion();
@@ -24,37 +25,9 @@ var finalScore = correct;
 var mostRecentScore = localStorage.getItem("mostRecentScore");
 var maxHighScores = 3;
 
-function saveHighScore() {
-  document.getElementById("scoreAnnounce").innerHTML =
-    "Your Score is " + correct;
-  localStorage.setItem("mostRecentScore", correct);
-
-  var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
-  correct = mostRecentScore;
-
-  initials.addEventListener("keyup", function () {
-    saveScoreBtn.disables = !initials.value;
-  });
-
-  //saveHighScore = e=>{
-  //  e.preventDefault();
-
-  var score = {
-    score: mostRecentScore,
-    name: initials.value,
-  };
-
-  highScores.push(score);
-  highScores.sort((a, b) => b.score - a.score);
-  highScores.splice(3);
-
-  localStorage.setItem("highScores", JSON.stringify(highscores));
-}
-
 function endQuiz() {
   clearInterval(startTime);
-  if ((timer = 0)) {
+  if (timer == 0) {
     document.getElementById("startNote").innerHTML = "Time's up!";
   } else {
     document.getElementById("startNote").innerHTML =
@@ -62,7 +35,7 @@ function endQuiz() {
   }
   test.innerHTML = "<h2> you got </h2>" + correct + "but you missed" + wrong;
 
-  saveHighScore();
+  document.getElementById("showTimer").innerHTML = " 0:00 ";
   //allows user to restart the test by setting position and time to 0
   pos = 0;
   correct = 0;
@@ -132,9 +105,6 @@ function checkAnswer() {
     renderQuestion();
   }
 }
-var scoreAnnounce;
-var textScoreAnnounce;
-var highScore;
 
 //questions
 var pos = 0; //position in quiz-Q#
