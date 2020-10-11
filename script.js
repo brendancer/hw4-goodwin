@@ -1,47 +1,39 @@
 //timer
-var minute = 2;
-var sec = 00;
+var timer = 120;
 
-function minTwoDigits() {
-  return (sec < 10 ? "0" : "") + sec;
+function start() {
+  startTime = setInterval(showTimer, 1000);
+  //document.getElementById("showTimer").innerHTML = minute + " :00";
+  document.getElementById("startNote").innerHTML = "Timer started";
+  renderQuestion();
 }
 
 function showTimer() {
-  sec--;
-  document.getElementById("showTimer").innerHTML =
-    minute + " : " + minTwoDigits();
-
-  if (sec == -1) {
-    minute--;
-    document.getElementById("showTimer").innerHTML = minute + " : 59";
-    sec = 59;
-  }
-  if (minute == -1) {
-    sec = 00;
+  timer--;
+  if (timer < 0) {
     endQuiz();
   }
+
+  minute = Math.floor(timer / 60);
+  sec = Math.floor(timer % 60);
+  document.getElementById("showTimer").innerHTML = minute + " : " + sec;
 }
 
 function endQuiz() {
   clearInterval(startTime);
-  document.getElementById("showTimer").innerHTML = "0:00";
-  document.getElementById("startNote").innerHTML = "Time's up!";
-  wedone = true;
+  if ((timer = 0)) {
+    document.getElementById("startNote").innerHTML = "Time's up!";
+  } else {
+    document.getElementById("startNote").innerHTML =
+      "You answered all the questions! Congratulations";
+  }
   test.innerHTML = "<h2> you got </h2>" + correct + "but you missed" + wrong;
   document.getElementById("test_status").innerHTML = "Test completed";
   //allows user to restart the test by setting position and time to 0
   pos = 0;
   correct = 0;
   wrong = 0;
-  minute = 1;
-  sec = 0;
-}
-
-function start() {
-  startTime = setInterval(showTimer, 1000);
-  document.getElementById("showTimer").innerHTML = minute + " :00";
-  document.getElementById("startNote").innerHTML = "Timer started";
-  renderQuestion();
+  timer = 0;
 }
 
 function renderQuestion() {
@@ -91,10 +83,11 @@ function checkAnswer() {
   //checking choice against correct answer
   if (choice == questions[pos].answer) {
     correct++;
+    sec = sec - 10;
   } else {
     wrong++;
-    sec = sec - 10;
-    if (minute == -1 && sec <= 0) {
+    timer -= 10;
+    if (timer < 0) {
       endQuiz();
     }
   }
@@ -107,7 +100,22 @@ function checkAnswer() {
     renderQuestion();
   }
 }
-//subtracting time for wrong answers
+var scoreannounce;
+var highScore;
+
+function highScoreinput() {
+  scoreannounce = document.createElement(h3);
+  scoreannounce.innerHTML = "Your score is" + correct;
+  highScore = localStorage.getItem("highscore");
+
+  if (highscore !== null) {
+    if (correct > highscore) {
+      localStorage.setItem("highscore", score);
+    }
+  } else {
+    localStorage.setItem("highscore", score);
+  }
+}
 
 //questions
 var pos = 0; //position in quiz-Q#
