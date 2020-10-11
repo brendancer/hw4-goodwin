@@ -94,7 +94,7 @@ function checkAnswer() {
   } else {
     wrong++;
     sec = sec - 10;
-    if (sec <= 0) {
+    if (minute == -1 && sec <= 0) {
       endQuiz();
     }
   }
