@@ -2,6 +2,9 @@
 var timer = 120;
 
 function start() {
+  pos = 0;
+  correct = 0;
+  wrong = 0;
   timer = 120;
   startTime = setInterval(showTimer, 1000);
   document.getElementById("startNote").innerHTML = "Timer started";
@@ -35,10 +38,6 @@ function endQuiz() {
 
   document.getElementById("showTimer").innerHTML = " 0:00 ";
   //allows user to restart the test by setting position and time to 0
-  pos = 0;
-  correct = 0;
-  wrong = 0;
-  timer = 0;
 }
 
 //-----------------------------------------------------------------------
@@ -108,7 +107,8 @@ function checkAnswer() {
 //-----------------------------------------------------------------------------
 var initialInput;
 function highScore() {
-  document.getElementById("initials").value = initialInput;
+  console.log("i'm clicked");
+  initialInput = document.getElementById("initials").value;
   console.log(initialInput);
 }
 
