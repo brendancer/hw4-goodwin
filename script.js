@@ -1,7 +1,6 @@
 //timer
 var minute = 0;
 var sec = 15;
-wedone = false;
 
 function minTwoDigits() {
   return (sec < 10 ? "0" : "") + sec;
@@ -31,6 +30,7 @@ function endQuiz() {
   //allows user to restart the test by setting position and time to 0
   pos = 0;
   correct = 0;
+  wrong = 0;
   minute = 0;
   sec = 15;
 }
@@ -90,11 +90,14 @@ function checkAnswer() {
   } else {
     wrong++;
   }
+
   pos++;
-  if (pos == question.length) {
+
+  if (pos == questions.length) {
     endQuiz();
+  } else {
+    renderQuestion();
   }
-  renderQuestion();
 }
 //subtracting time for wrong answers
 
