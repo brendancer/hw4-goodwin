@@ -1,6 +1,6 @@
 //timer
-var minute = 0;
-var sec = 15;
+var minute = 2;
+var sec = 00;
 
 function minTwoDigits() {
   return (sec < 10 ? "0" : "") + sec;
@@ -13,9 +13,11 @@ function showTimer() {
 
   if (sec == -1) {
     minute--;
+    document.getElementById("showTimer").innerHTML = minute + " : 59";
     sec = 59;
   }
   if (minute == -1) {
+    sec = 00;
     endQuiz();
   }
 }
@@ -31,12 +33,14 @@ function endQuiz() {
   pos = 0;
   correct = 0;
   wrong = 0;
-  minute = 0;
-  sec = 15;
+  minute = 1;
+  sec = 0;
 }
 
 function start() {
   startTime = setInterval(showTimer, 1000);
+  document.getElementById("showTimer").innerHTML = minute + " :00";
+  document.getElementById("startNote").innerHTML = "Timer started";
   renderQuestion();
 }
 
@@ -68,7 +72,7 @@ function renderQuestion() {
     chC +
     "</label><br>";
   test.innerHTML +=
-    "<label> <input type ='radio' name = 'choices' value = 'A'> " +
+    "<label> <input type ='radio' name = 'choices' value = 'D'> " +
     chD +
     "</label><br>";
 
@@ -89,6 +93,10 @@ function checkAnswer() {
     correct++;
   } else {
     wrong++;
+    sec = sec - 10;
+    if (sec <= 0) {
+      endQuiz();
+    }
   }
 
   pos++;
