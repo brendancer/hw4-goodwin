@@ -37,26 +37,27 @@
         Answer as many questions as you can before the timer runs out! Every
         wrong answer will subtract 10 seconds from your timne
       </p>
-    </div>
-    <di id="test_status">
-      <h2></h2>
-    </di>
-    <div id="test_score"></div>
+   </div>
+  
+ 
 
     <script src="script.js"></script>
 
+
     <!--High score system-->
     <div class="container" id="scorebox">
-      <h2></h2>
+      <h2 id = scoreAnnounce></h2>
      
         <label for="username">Please Enter Your Initials</label>
         <input
           type="text"
           class="form-control"
-          id="Initials"
+          id = "initials""
+          name ="initials"
           placeholder="for example JFK"
           value=""
         />
+        <button type = "submit" class = "btn" id = "saveScoreButton">Save</button>
         <br>
         <br>
 

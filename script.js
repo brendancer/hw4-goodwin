@@ -3,7 +3,6 @@ var timer = 120;
 
 function start() {
   startTime = setInterval(showTimer, 1000);
-  //document.getElementById("showTimer").innerHTML = minute + " :00";
   document.getElementById("startNote").innerHTML = "Timer started";
   renderQuestion();
 }
@@ -19,6 +18,40 @@ function showTimer() {
   document.getElementById("showTimer").innerHTML = minute + " : " + sec;
 }
 
+var initials = document.getElementById("initials");
+var saveScoreBtn = document.getElementById("saveScoreBtn");
+var finalScore = correct;
+var mostRecentScore = localStorage.getItem("mostRecentScore");
+var maxHighScores = 3;
+
+function saveHighScore() {
+  document.getElementById("scoreAnnounce").innerHTML =
+    "Your Score is " + correct;
+  localStorage.setItem("mostRecentScore", correct);
+
+  var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+  correct = mostRecentScore;
+
+  initials.addEventListener("keyup", function () {
+    saveScoreBtn.disables = !initials.value;
+  });
+
+  //saveHighScore = e=>{
+  //  e.preventDefault();
+
+  var score = {
+    score: mostRecentScore,
+    name: initials.value,
+  };
+
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.splice(3);
+
+  localStorage.setItem("highScores", JSON.stringify(highscores));
+}
+
 function endQuiz() {
   clearInterval(startTime);
   if ((timer = 0)) {
@@ -28,7 +61,8 @@ function endQuiz() {
       "You answered all the questions! Congratulations";
   }
   test.innerHTML = "<h2> you got </h2>" + correct + "but you missed" + wrong;
-  document.getElementById("test_status").innerHTML = "Test completed";
+
+  saveHighScore();
   //allows user to restart the test by setting position and time to 0
   pos = 0;
   correct = 0;
@@ -38,8 +72,6 @@ function endQuiz() {
 
 function renderQuestion() {
   test = document.getElementById("test");
-  document.getElementById("test_status").innerHTML =
-    "Question " + (pos + 1) + " of " + questions.length;
 
   question = questions[pos].question;
   chA = questions[pos].a;
@@ -100,22 +132,9 @@ function checkAnswer() {
     renderQuestion();
   }
 }
-var scoreannounce;
+var scoreAnnounce;
+var textScoreAnnounce;
 var highScore;
-
-function highScoreinput() {
-  scoreannounce = document.createElement(h3);
-  scoreannounce.innerHTML = "Your score is" + correct;
-  highScore = localStorage.getItem("highscore");
-
-  if (highscore !== null) {
-    if (correct > highscore) {
-      localStorage.setItem("highscore", score);
-    }
-  } else {
-    localStorage.setItem("highscore", score);
-  }
-}
 
 //questions
 var pos = 0; //position in quiz-Q#
