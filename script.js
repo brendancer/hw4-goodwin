@@ -116,14 +116,39 @@ function checkAnswer() {
 }
 
 //-----------------------------------------------------------------------------
-var highscores;
+var highscores = [];
 function highScore() {
   initialInput = document.getElementById("initials").value;
-  mostRecentScore = localStorage.getItem("currentScore");
-  scoreline = { name: initialInput, finalScore: mostRecentScore };
+  mostRecentScore = JSON.parse(localStorage.getItem("currentScore"));
 
-  console.log(scoreline);
+  scoreline = { name: initialInput, finalScore: mostRecentScore };
+  highscores.push(scoreline);
+
+  localStorage.setItem("highscoreList", highscores);
+
+  function compare(a, b) {
+    var finalScoreA = a.finalScore;
+    var finalScoreB = b.finalScore;
+    let comparison = 0;
+    if (finalScoreA > finalScoreB) {
+      comparison = 1;
+    } else if (finalScoreA < finalScoreB) {
+      comparison = -1;
+    }
+    return comparison * -1;
+  }
+
+  highscores.sort(compare);
+
+  highscores.splice(3);
+
+  console.log(highscores);
+
+  document.getElementById("highscore").innerText = highscores[0] || [];
+  document.getElementById("score-2").innerText = highscores[1] || [];
+  document.getElementById("score-3").innerText = highscores[2] || [];
 }
+
 //------------------------------------------------------------------------------
 
 //questions

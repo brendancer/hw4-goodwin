@@ -33,7 +33,9 @@ function endQuiz() {
     document.getElementById("startNote").innerHTML = "Time's up!";
   } else {
     document.getElementById("startNote").innerHTML =
-      "You answered all the questions! You get a time bonus of 2 points per second remaining!";
+      "You answered all the questions! You get a time bonus of 2 points per second remaining! <h4> You had " +
+      timer +
+      "  seconds left.</h4>";
   }
 
   score = correct * 10 + timer * 2;
@@ -44,6 +46,7 @@ function endQuiz() {
     wrong +
     " questions. <h2>Your total score is </h2>" +
     score;
+  localStorage.setItem("currentScore", score);
 
   //allows user to restart the test by setting position and time to 0
 }
@@ -102,7 +105,6 @@ function checkAnswer() {
   }
   if (timer < 0) {
     endQuiz();
-    timer = 0;
   }
   pos++;
 
@@ -114,20 +116,14 @@ function checkAnswer() {
 }
 
 //-----------------------------------------------------------------------------
-
+var highscores;
 function highScore() {
   initialInput = document.getElementById("initials").value;
-  console.log(initialInput);
-  localStorage.setItem("currentScore", score) || [];
+  mostRecentScore = localStorage.getItem("currentScore");
+  scoreline = { name: initialInput, finalScore: mostRecentScore };
 
-  highScores = JSON.parse(localStorage.getItem("currentScore"));
-
-  console.log(highscores);
-  //score.innerText = mostRecentScore;
-
-  //highScores.push(myScore);
+  console.log(scoreline);
 }
-
 //------------------------------------------------------------------------------
 
 //questions
