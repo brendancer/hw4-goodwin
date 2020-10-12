@@ -1,7 +1,8 @@
 //timer
-var timer = 120;
+var timer = 60;
 
 function start() {
+  document.getElementById("showTimer").innerHTML = " 0:00 ";
   pos = 0;
   correct = 0;
   wrong = 0;
@@ -34,6 +35,7 @@ function endQuiz() {
     document.getElementById("startNote").innerHTML =
       "You answered all the questions! You get a time bonus of 2 points per second remaining!";
   }
+
   score = correct * 10 + timer * 2;
   test.innerHTML =
     "You answered " +
@@ -43,8 +45,8 @@ function endQuiz() {
     " questions. <h2>Your total score is </h2>" +
     score;
 
-  document.getElementById("showTimer").innerHTML = " 0:00 ";
-  localStorage.setItem("mostRecentScore");
+  localStorage.setItem("mostRecentScore", score);
+
   //allows user to restart the test by setting position and time to 0
 }
 
