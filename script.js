@@ -33,7 +33,9 @@ function endQuiz() {
     document.getElementById("startNote").innerHTML = "Time's up!";
   } else {
     document.getElementById("startNote").innerHTML =
-      "You answered all the questions! You get a time bonus of 2 points per second remaining!";
+      "You answered all the questions! You get a time bonus of 2 points per second remaining! <h4> You had " +
+      timer +
+      "  seconds left.</h4>";
   }
 
   score = correct * 10 + timer * 2;
@@ -44,8 +46,7 @@ function endQuiz() {
     wrong +
     " questions. <h2>Your total score is </h2>" +
     score;
-
-  localStorage.setItem("mostRecentScore", score);
+  localStorage.setItem("currentScore", score);
 
   //allows user to restart the test by setting position and time to 0
 }
@@ -115,13 +116,15 @@ function checkAnswer() {
 }
 
 //-----------------------------------------------------------------------------
-
-var initialInput;
+var highscores;
 function highScore() {
   initialInput = document.getElementById("initials").value;
-  localStorage.setItem(initialInput, JSON.stringify([]));
-  console.log(localStorage);
+  mostRecentScore = localStorage.getItem("currentScore");
+  scoreline = { name: initialInput, finalScore: mostRecentScore };
+
+  console.log(scoreline);
 }
+//------------------------------------------------------------------------------
 
 //questions
 var pos = 0; //position in quiz-Q#
@@ -133,6 +136,7 @@ var question; //individual question
 var choice; //user's selected choice
 var choices; //[possible answers]
 var chA, chB, chC, chD;
+var initialInput;
 
 var questions = [
   {
