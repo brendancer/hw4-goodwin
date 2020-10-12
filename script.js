@@ -5,7 +5,7 @@ function start() {
   pos = 0;
   correct = 0;
   wrong = 0;
-  timer = 120;
+  timer = 60;
   startTime = setInterval(showTimer, 1000);
   document.getElementById("startNote").innerHTML = "Timer started";
   renderQuestion();
@@ -32,11 +32,19 @@ function endQuiz() {
     document.getElementById("startNote").innerHTML = "Time's up!";
   } else {
     document.getElementById("startNote").innerHTML =
-      "You answered all the questions! Congratulations";
+      "You answered all the questions! You get a time bonus of 2 points per second remaining!";
   }
-  test.innerHTML = "<h2> you got </h2>" + correct + "but you missed" + wrong;
+  score = correct * 10 + timer * 2;
+  test.innerHTML =
+    "You answered " +
+    correct +
+    " questions correctly but you missed " +
+    wrong +
+    " questions. <h2>Your total score is </h2>" +
+    score;
 
   document.getElementById("showTimer").innerHTML = " 0:00 ";
+  localStorage.setItem("mostRecentScore");
   //allows user to restart the test by setting position and time to 0
 }
 
@@ -105,16 +113,18 @@ function checkAnswer() {
 }
 
 //-----------------------------------------------------------------------------
+
 var initialInput;
 function highScore() {
-  console.log("i'm clicked");
   initialInput = document.getElementById("initials").value;
-  console.log(initialInput);
+  localStorage.setItem(initialInput, JSON.stringify([]));
+  console.log(localStorage);
 }
 
 //questions
 var pos = 0; //position in quiz-Q#
 var correct = 0; //number of questions answered correctly
+var score;
 var wrong = 0; //number of querstions answered incorrectly
 var test; //test div
 var question; //individual question
