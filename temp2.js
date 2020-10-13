@@ -46,6 +46,10 @@ function endQuiz() {
     wrong +
     " questions. <h2>Your total score is </h2>" +
     score;
+
+  localStorage.setItem("currentScore", score);
+
+  //allows user to restart the test by setting position and time to 0
 }
 
 //-----------------------------------------------------------------------
@@ -113,20 +117,49 @@ function checkAnswer() {
 }
 
 //-----------------------------------------------------------------------------
-var highscoresList;
+var highscores = [];
 function highScore() {
-  //get input from saveInitials button
+  localStorage.getItem(JSON.parse("highscoreList")) || [];
   initialInput = document.getElementById("initials").value;
-  //creates an object using initials and score
-  scoreline = { name: initialInput, finalScore: score };
-  var highscores = [{ name: "none", finalScore: "0" }];
+  mostRecentScore = JSON.parse(localStorage.getItem("currentScore"));
+
+  scoreline = { name: initialInput, finalScore: mostRecentScore };
 
   highscores.push(scoreline);
 
-  localStorage.setItem("highscoresList", JSON.stringify(["highscores"]));
+  localStorage.setItem("highscoreList", JSON.stringify("highscores"));
 
-  console.log(scoreline);
+  function compare(a, b) {
+    var finalScoreA = a.finalScore;
+    var finalScoreB = b.finalScore;
+    let comparison = 0;
+    if (finalScoreA > finalScoreB) {
+      comparison = 1;
+    } else if (finalScoreA < finalScoreB) {
+      comparison = -1;
+    }
+    return comparison * -1;
+  }
+
+  highscores.sort(compare);
+  highscores.splice(5);
+
+  console.log(highscores);
+
+  document.getElementById("highscore").innerText =
+    highscores[0].finalScore + "  -  " + highscores[0].name || [];
+  document.getElementById("score-2").innerText =
+    highscores[1].finalScore + "  -  " + highscores[1].name || [];
+  document.getElementById("score-3").innerText =
+    highscores[2].finalScore + "  -  " + highscores[2].name || [];
+  document.getElementById("score-4").innerText =
+    highscores[2].finalScore + "  -  " + highscores[3].name || [];
+  document.getElementById("score-5").innerText =
+    highscores[2].finalScore + "  -  " + highscores[4].name || [];
+
+  localStorage.setItem("highscoreList", JSON.stringify("highscores"));
 }
+
 //------------------------------------------------------------------------------
 
 //questions
