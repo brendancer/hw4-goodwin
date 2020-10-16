@@ -39,15 +39,6 @@ function endQuiz() {
       "  seconds left.</h4>";
   }
 
-  // $("#test").clear() // To clear out the inner html
-
-  // var heading = $(`
-  //     <div>You answered ${correct} questions correctly but you missed ${wrong} questions. </div>
-  //     <h2>Your total score is ${score}</h2>
-  // `)
-
-  //$("#test").append(heading);
-
   score = correct * 10 + timer * 2;
   test.innerHTML =
     "You answered " +
@@ -155,20 +146,8 @@ function highScore() {
     document.getElementById("score" + (i + 1)).innerText =
       highscoresList[i].finalScore + "  -  " + highscoresList[i].name;
 
-    localStorage.setItem("highscoresList", highscoresList);
+    localStorage.setItem("highscoresList", JSON.stringify(highscoresList));
   }
-
-  //display the results
-  // document.getElementById("score1").innerText =
-  //  highscoresList[0].finalScore + "  -  " + highscoresList[0].name || [];
-  // document.getElementById("score2").innerText =
-  //   highscoresList[1].finalScore + "  -  " + highscoresList[1].name || [];
-  // document.getElementById("score3").innerText =
-  //   highscoresList[2].finalScore + "  -  " + highscoresList[2].name || [];
-  // document.getElementById("score4").innerText =
-  //   highscoresList[2].finalScore + "  -  " + highscoresList[3].name || [];
-  // document.getElementById("score5").innerText =
-  //   highscoresList[2].finalScore + "  -  " + highscoresList[4].name || [];
 }
 
 //------------------------------------------------------------------------------
