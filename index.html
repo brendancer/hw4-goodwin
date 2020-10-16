@@ -37,17 +37,15 @@
         Answer as many questions as you can before the timer runs out! Every
         wrong answer will subtract 10 seconds from your time
       </p>
+      <!--button is hidden and then appears after test is complete-->
    </div>
   
- 
-
-    <script src="script.js"></script>
-
 
     <!--High score system-->
+    
+
     <div class="container" id="scorebox">
-      <h2 id = scoreAnnounce></h2>
-     
+      <div id= "saveMyScore" style= "display:none">
         <label for="initials">Please Enter Your Name</label>
         <input
           type="text"
@@ -57,23 +55,30 @@
           placeholder="for example RGB"
         />
        <button type = "submit" class ="btn btn-success" id="saveInitials" onclick="highScore()">Save My Score</button>
+        </div>
+     
+        <div>
+      <h2 id = scoreAnnounce></h2>
+ 
       <br>
       <br>
        <h4><strong>High Scores</strong></h4>
-       <ol id= highScoreoutput>
-         <li class="text-sucess large" id = "highscore"><em>0 - none</em></li>
-         <li id="score-2">0 - none</li>
-         <li id="score-3">0 - none</li>
-         <li id="score-4">0 - none</li>
-         <li id="score-5">0 - none</li>
-
+       <ol id= HSlist>
+         <li id="score1"></li>
+         <li id="score2"></li>
+         <li id="score3"></li>
+         <li id="score4"></li>
+         <li id="score5"></li>
+          
 
        </ol>
+      </div>
       </div>
       
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+ 
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -88,6 +93,8 @@
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
-    ></script>
+          ></script>
+      <script src="script.js"></script> 
+
   </body>
 </html>

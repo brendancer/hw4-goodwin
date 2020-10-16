@@ -38,15 +38,6 @@ function endQuiz() {
       "  seconds left.</h4>";
   }
 
-  // $("#test").clear() // To clear out the inner html
-
-  // var heading = $(`
-  //     <div>You answered ${correct} questions correctly but you missed ${wrong} questions. </div>
-  //     <h2>Your total score is ${score}</h2>
-  // `)
-
-  //$("#test").append(heading);
-
   score = correct * 10 + timer * 2;
   test.innerHTML =
     "You answered " +
@@ -55,26 +46,6 @@ function endQuiz() {
     wrong +
     " questions. <h2>Your total score is </h2>" +
     score;
-
-  document.getElementById("saveMyScore").style.display = "block";
-
-  //get input from saveInitials button
-  initialInput = document.getElementById("initials").value;
-
-  //creates an object using initials and score
-  scoreline = { name: initialInput, finalScore: score };
-
-  //add the current scores
-  highscoresList.push(scoreline);
-  console.log(highscoresList);
-
-  //sort the list to get the scores in order
-  highscoresList.sort(function (a, b) {
-    return b - a;
-  });
-  console.log(highscoresList);
-
-  localStorage.setItem(highscoresList);
 }
 
 //-----------------------------------------------------------------------
@@ -144,32 +115,43 @@ function checkAnswer() {
 //-----------------------------------------------------------------------------
 var highscoresList;
 function highScore() {
+  //get input from saveInitials button
+  initialInput = document.getElementById("initials").value;
+
+  //creates an object using initials and score
+  scoreline = { name: initialInput, finalScore: score };
+
   // get previously saved highscores list from local storage
-  highscoresList = JSON.parse(localStorage.getItem(highscoresList));
+  highscoresList = JSON.parse(localStorage.getItem(highscoresList)) || [];
+  console.log(highscoresList);
+
+  //add the current scores
+  highscoresList.push(scoreline);
+  console.log(highscoresList);
+
+  //sort the list to get the scores in order
+  highscoresList.sort(function (a, b) {
+    return b - a;
+  });
   console.log(highscoresList);
 
   //save only the top 5
   highscoresList.splice(5);
   console.log(highscoresList);
 
-  for (var i = 0; i < highscoresList.length; i++) {
-    document.getElementById("score" + (i + 1)).innerText =
-      highscoresList[i].finalScore + "  -  " + highscoresList[i].name;
-  }
-
   //display the results
-  // document.getElementById("score1").innerText =
-  //  highscoresList[0].finalScore + "  -  " + highscoresList[0].name || [];
-  // document.getElementById("score2").innerText =
-  //   highscoresList[1].finalScore + "  -  " + highscoresList[1].name || [];
-  // document.getElementById("score3").innerText =
-  //   highscoresList[2].finalScore + "  -  " + highscoresList[2].name || [];
-  // document.getElementById("score4").innerText =
-  //   highscoresList[2].finalScore + "  -  " + highscoresList[3].name || [];
-  // document.getElementById("score5").innerText =
-  //   highscoresList[2].finalScore + "  -  " + highscoresList[4].name || [];
+  document.getElementById("score1").innerText =
+    highscoresList[0].finalScore + "  -  " + highscoresList[0].name || [];
+  document.getElementById("score2").innerText =
+    highscoresList[1].finalScore + "  -  " + highscoresList[1].name || [];
+  document.getElementById("score3").innerText =
+    highscoresList[2].finalScore + "  -  " + highscoresList[2].name || [];
+  document.getElementById("score4").innerText =
+    highscoresList[2].finalScore + "  -  " + highscoresList[3].name || [];
+  document.getElementById("score5").innerText =
+    highscoresList[2].finalScore + "  -  " + highscoresList[4].name || [];
 
-  localStorage.setItem("highcoresList", JSON.stringify(highscoresList));
+  localStorage.setItem("highcoresList", JSON.stringify("scoreline"));
 }
 //------------------------------------------------------------------------------
 
