@@ -17,6 +17,7 @@ function start() {
 function showTimer() {
   timer--;
   if (timer < 0) {
+    timer = 0;
     endQuiz();
   }
 
@@ -29,7 +30,7 @@ function showTimer() {
 
 function endQuiz() {
   clearInterval(startTime);
-  if (timer == 0) {
+  if (timer <= 0) {
     document.getElementById("startNote").innerHTML = "Time's up!";
   } else {
     document.getElementById("startNote").innerHTML =
@@ -57,24 +58,6 @@ function endQuiz() {
     score;
 
   document.getElementById("saveMyScore").style.display = "block";
-
-  //get input from saveInitials button
-  initialInput = document.getElementById("initials").value;
-
-  //creates an object using initials and score
-  scoreline = { name: initialInput, finalScore: score };
-
-  //add the current scores
-  highscoresList.push(scoreline);
-  console.log(highscoresList);
-
-  //sort the list to get the scores in order
-  highscoresList.sort(function (a, b) {
-    return b - a;
-  });
-  console.log(highscoresList);
-
-  localStorage.setItem(highscoresList);
 }
 
 //-----------------------------------------------------------------------
@@ -144,8 +127,24 @@ function checkAnswer() {
 //-----------------------------------------------------------------------------
 var highscoresList;
 function highScore() {
+  //get input from saveInitials button
+  initialInput = document.getElementById("initials").value;
+
+  //creates an object using initials and score
+  scoreline = { name: initialInput, finalScore: score };
+
   // get previously saved highscores list from local storage
-  highscoresList = JSON.parse(localStorage.getItem(highscoresList));
+  highscoresList = JSON.parse(localStorage.getItem(highscoresList)) || [];
+  console.log(highscoresList);
+
+  //add the current scores
+  highscoresList.push(scoreline);
+  console.log(highscoresList);
+
+  //sort the list to get the scores in order
+  highscoresList.sort(function (a, b) {
+    return b - a;
+  });
   console.log(highscoresList);
 
   //save only the top 5
@@ -155,6 +154,8 @@ function highScore() {
   for (var i = 0; i < highscoresList.length; i++) {
     document.getElementById("score" + (i + 1)).innerText =
       highscoresList[i].finalScore + "  -  " + highscoresList[i].name;
+
+    localStorage.setItem("highscoresList", highscoresList);
   }
 
   //display the results
@@ -168,9 +169,8 @@ function highScore() {
   //   highscoresList[2].finalScore + "  -  " + highscoresList[3].name || [];
   // document.getElementById("score5").innerText =
   //   highscoresList[2].finalScore + "  -  " + highscoresList[4].name || [];
-
-  localStorage.setItem("highcoresList", JSON.stringify(highscoresList));
 }
+
 //------------------------------------------------------------------------------
 
 //questions
